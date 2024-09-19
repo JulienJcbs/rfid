@@ -4,7 +4,6 @@ import cv2
 from PIL import Image, ImageTk
 import threading
 from gpiozero import Button
-import time
 
 class VideoPlayer:
     def __init__(self, window, video_source1, video_source2):
