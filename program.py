@@ -1,29 +1,14 @@
-import RPi.GPIO as GPIO
-import time
+from gpiozero import Button
+from signal import pause
 
-# Configurer le mode des broches
-GPIO.setmode(GPIO.BCM)
+# Définir la broche GPIO que vous souhaitez surveiller
+broche = Button(17)
 
-# Définir le numéro de la broche GPIO que vous souhaitez surveiller
-BROCHE = 17
+def signal_detecte():
+    print("Signal détecté")
 
-# Configurer la broche comme entrée
-GPIO.setup(BROCHE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# Attacher une fonction de rappel pour détecter les changements
+broche.when_pressed = signal_detecte
 
-try:
-    while True:
-        # Lire l'état de la broche
-        if GPIO.input(BROCHE) == GPIO.HIGH:
-            print("Signal détecté")
-        else:
-            print("Pas de signal")
-        
-        # Attendre un peu avant de vérifier à nouveau
-        time.sleep(1)
-
-except KeyboardInterrupt:
-    print("Arrêt du programme")
-
-finally:
-    # Nettoyer les configurations GPIO
-    GPIO.cleanup()
+# Attendre que l'utilisateur interrompe le programme
+pause()
